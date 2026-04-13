@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "string_therapy"
+  site-url: "https://alix559.github.io/string_therapy"
+  description: "a platform for dialogue engineering inspired by George polya (solveit ) Jeremy Howards(solveit with code)"
+  repo-branch: main
+  repo-url: "https://github.com/alix559/string_therapy"

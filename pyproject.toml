@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "string_therapy"
+dynamic = ["version"]
+description = "a platform for dialogue engineering inspired by George polya (solveit ) Jeremy Howards(solveit with code)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "Apache-2.0"}
+authors = [{name = "Alex V Jacob", email = "alixjcob559@gmail.com"}]
+keywords = ['nbdev']
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+]
+dependencies = []
+
+[project.urls]
+Repository = "https://github.com/alix559/string_therapy"
+Documentation = "https://alix559.github.io/string_therapy/"
+
+[project.entry-points.nbdev]
+string_therapy = "string_therapy._modidx:d"
+
+[tool.setuptools.dynamic]
+version = {attr = "string_therapy.__version__"}
+
+[tool.setuptools.packages.find]
+include = ["string_therapy"]
+
+[tool.nbdev]

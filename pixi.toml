@@ -1,0 +1,16 @@
+[workspace]
+authors = ["Alex Jacob <alixjcob559@gmail.com>"]
+channels = ["conda-forge"]
+name = "stringTherapy"
+platforms = ["osx-arm64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python-fasthtml = ">=0.13.3,<0.14"
+jupyter = ">=1.1.1,<2"
+monsterui = ">=1.0.19,<2"
+
+[pypi-dependencies]
+nbdev="*"
