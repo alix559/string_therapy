@@ -1,0 +1,2 @@
+[nbdev]
+string_therapy = string_therapy._modidx:d

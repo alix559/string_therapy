@@ -2,15 +2,68 @@
 authors = ["Alex Jacob <alixjcob559@gmail.com>"]
 channels = ["conda-forge"]
 name = "stringTherapy"
-platforms = ["osx-arm64"]
+platforms = ["linux-64"]
 version = "0.1.0"
 
-[tasks]
+# nbdev: `nbdev_prepare`. App: `python -m string_therapy.app` (uvicorn only). Run `jupyter lab` separately; icon 4 link: ST_JUPYTER_LAB_URL. Env: nbs/03_therapy_config.ipynb.
+
+# Optional dev defaults (override via shell or ST_ENV_FILE → .env):
+[activation.env]
+# Align REST client + default link placeholder with your `jupyter lab` server
+JUPYTER_HOST = "127.0.0.1"
+JUPYTER_PORT = "8888"
+# If Jupyter prints another port (e.g. 52537 when 8888 is busy), set e.g. JUPYTER_BASE_URL=http://127.0.0.1:52537
+# Matches jupyter-lab tasks (--ServerApp.token=). Set a secret if you enable token auth on Jupyter.
+JUPYTER_TOKEN = ""
+ST_PORT = "5007"
+# Optional: ST_BIND_HOST=::  so http://localhost:ST_PORT uses IPv6 (::1). Default 0.0.0.0 = IPv4 only.
+
+[tasks.app]
+description = "FastHTML app on ST_PORT (run `jupyter lab` separately for your notebook server)."
+cmd = ["python", "-m", "string_therapy.app"]
+
+[tasks.jupyter-lab]
+description = "JupyterLab with --collaborative (Yjs). CSP frame-ancestors * for embedded iframe. Pair with: pixi run app."
+cmd = [
+  "jupyter",
+  "lab",
+  "--collaborative",
+  "--ServerApp.ip=127.0.0.1",
+  "--ServerApp.port=8888",
+  "--ServerApp.token=",
+  "--ServerApp.password=",
+  "--ServerApp.disable_check_xsrf=True",
+  "--ServerApp.open_browser=False",
+  "--ServerApp.tornado_settings={\"headers\": {\"Content-Security-Policy\": \"frame-ancestors *\"}}",
+]
+
+[tasks.jupyter-lab-solo]
+description = "JupyterLab without --collaborative (quieter if you only need REST cell writes from the app)."
+cmd = [
+  "jupyter",
+  "lab",
+  "--ServerApp.ip=127.0.0.1",
+  "--ServerApp.port=8888",
+  "--ServerApp.token=",
+  "--ServerApp.password=",
+  "--ServerApp.disable_check_xsrf=True",
+  "--ServerApp.open_browser=False",
+  "--ServerApp.tornado_settings={\"headers\": {\"Content-Security-Policy\": \"frame-ancestors *\"}}",
+]
 
 [dependencies]
 python-fasthtml = ">=0.13.3,<0.14"
-jupyter = ">=1.1.1,<2"
+jupyterlab = ">=4.5.6,<5"
+jupyter-collaboration = "*"
 monsterui = ">=1.0.19,<2"
+ipykernel = ">=7.2.0,<8"
+nbformat = ">=5.10.4,<6"
+httpx = ">=0.28,<1"
+python-dotenv = ">=1.2.2,<2"
+starlette = "*"
 
 [pypi-dependencies]
-nbdev="*"
+# PyPI-only; do not `pixi add lisette` (conda has no package with that name).
+nbdev = "*"
+string_therapy = { path = ".", editable = true }
+lisette = "*"

@@ -1,0 +1,17 @@
+LICENSE
+MANIFEST.in
+README.md
+pyproject.toml
+string_therapy/__init__.py
+string_therapy/_modidx.py
+string_therapy/app.py
+string_therapy/core.py
+string_therapy/icon1.py
+string_therapy/icon4.py
+string_therapy/lisette_client.py
+string_therapy/therapy_config.py
+string_therapy.egg-info/PKG-INFO
+string_therapy.egg-info/SOURCES.txt
+string_therapy.egg-info/dependency_links.txt
+string_therapy.egg-info/entry_points.txt
+string_therapy.egg-info/top_level.txt
