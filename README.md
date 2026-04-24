@@ -55,13 +55,3 @@ Documentation can be found hosted on this GitHub
 find package manager specific guidelines on
 [conda](https://anaconda.org/alix559/string_therapy) and
 [pypi](https://pypi.org/project/string_therapy/) respectively.
-
-## How to use
-
-Fill me in please! Don’t forget code examples:
-
-``` python
-1+1
-```
-
-    2

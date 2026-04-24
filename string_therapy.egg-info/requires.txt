@@ -1,0 +1,15 @@
+httpx<1,>=0.28
+lisette
+nbformat<6,>=5.10.4
+python-dotenv<2,>=1.2.2
+
+[app]
+fastcore
+monsterui<2,>=1.0.19
+python-fasthtml<0.14,>=0.13.3
+starlette
+
+[jupyter]
+ipykernel<8,>=7.2.0
+jupyter-collaboration
+jupyterlab<5,>=4.5.6

@@ -14,4 +14,5 @@ string_therapy.egg-info/PKG-INFO
 string_therapy.egg-info/SOURCES.txt
 string_therapy.egg-info/dependency_links.txt
 string_therapy.egg-info/entry_points.txt
+string_therapy.egg-info/requires.txt
 string_therapy.egg-info/top_level.txt

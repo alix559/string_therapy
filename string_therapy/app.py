@@ -7,7 +7,6 @@ from __future__ import annotations
 
 import inspect
 import os
-import sys
 import threading
 import webbrowser
 
@@ -135,9 +134,8 @@ def _chat_notebook_default(session) -> str:
 def _expanded_space(session, active_icon_id: int) -> Div:
     """Expanded-space content.
 
-    Key constraint: keep the Jupyter iframe alive across dock switches.
-    We always include icon4's iframe markup (with ``hx-preserve`` on the iframe),
-    and we only show/hide panels via CSS classes.
+    Keep the Jupyter iframe alive across dock switches by always including icon4's iframe
+    markup (the iframe itself is marked ``hx-preserve``), and show/hide panels via CSS.
     """
     sid4 = _ensure_sid(session, "icon4_sid")
     icon4_node = icon4_viz(sid4, session=session)
@@ -359,36 +357,19 @@ _prioritize_routes_before_static()
 
 # %% ../nbs/01_app.ipynb #app-code-main
 def main() -> None:
-    """
-    Start the String Therapy web server (uvicorn).
-
-    Importing ``app`` does not run this; execute ``python -m string_therapy.app`` or ``from string_therapy.app import main; main()``.
-    """
-    import uvicorn
-
-    port = tc.http_port()
-    bind_host = tc.http_bind_host()
+    """Start the web server. Run: ``python -m string_therapy.app``."""
     url = tc.web_app_url()
-    print(
-        f"String therapy: bind {bind_host}:{port} — open {url}",
-        file=sys.stderr,
-    )
-    print(
-        "String therapy: if http://localhost:{p}/ shows ERR_EMPTY_RESPONSE, use {u} "
-        "(localhost often resolves to IPv6 ::1; server may be IPv4-only). "
-        "Or set ST_BIND_HOST=:: in .env.".format(p=port, u=url),
-        file=sys.stderr,
-    )
     if tc.open_browser():
         threading.Timer(1.0, lambda u=url: webbrowser.open(u)).start()
-    uvicorn.run(
-        "string_therapy.app:app",
-        host=bind_host,
-        port=port,
+    serve(
+        appname="string_therapy.app",
+        host=tc.http_bind_host(),
+        port=tc.http_port(),
         reload=tc.uvicorn_reload(),
         log_level="info",
     )
 
-
+# %% ../nbs/01_app.ipynb #383c036d
+#| eval: false
 if __name__ == "__main__":
     main()
