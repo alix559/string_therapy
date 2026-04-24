@@ -16,6 +16,7 @@ JUPYTER_PORT = "8888"
 # Matches jupyter-lab tasks (--ServerApp.token=). Set a secret if you enable token auth on Jupyter.
 JUPYTER_TOKEN = ""
 ST_PORT = "5007"
+QUARTO_DENO = "deno"
 # Optional: ST_BIND_HOST=::  so http://localhost:ST_PORT uses IPv6 (::1). Default 0.0.0.0 = IPv4 only.
 
 [tasks.app]
@@ -63,6 +64,7 @@ httpx = ">=0.28,<1"
 python-dotenv = ">=1.2.2,<2"
 starlette = "*"
 quarto = "*"
+deno = "*"
 
 [pypi-dependencies]
 # PyPI-only; do not `pixi add lisette` (conda has no package with that name).

@@ -1,0 +1,10 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_core.ipynb
+      - 01_app.ipynb
+      - 02_icon1.ipynb
+      - 02_icon4.ipynb
+      - 03_lisette.ipynb
+      - 03_therapy_config.ipynb

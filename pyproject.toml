@@ -16,10 +16,14 @@ classifiers = [
     "Programming Language :: Python :: 3 :: Only",
 ]
 dependencies = [
+    "fastcore",
     "httpx>=0.28,<1",
     "lisette",
+    "monsterui>=1.0.19,<2",
     "nbformat>=5.10.4,<6",
     "python-dotenv>=1.2.2,<2",
+    "python-fasthtml>=0.13.3,<0.14",
+    "starlette",
 ]
 
 [project.optional-dependencies]

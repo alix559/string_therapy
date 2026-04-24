@@ -12,10 +12,14 @@ Classifier: Programming Language :: Python :: 3 :: Only
 Requires-Python: >=3.10
 Description-Content-Type: text/markdown
 License-File: LICENSE
+Requires-Dist: fastcore
 Requires-Dist: httpx<1,>=0.28
 Requires-Dist: lisette
+Requires-Dist: monsterui<2,>=1.0.19
 Requires-Dist: nbformat<6,>=5.10.4
 Requires-Dist: python-dotenv<2,>=1.2.2
+Requires-Dist: python-fasthtml<0.14,>=0.13.3
+Requires-Dist: starlette
 Provides-Extra: app
 Requires-Dist: fastcore; extra == "app"
 Requires-Dist: monsterui<2,>=1.0.19; extra == "app"

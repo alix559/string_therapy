@@ -3104,12 +3104,16 @@ packages:
 - pypi: ./
   name: string-therapy
   version: 0.0.1
-  sha256: a8950996c784a6c440d2b5a95bf0fab3d6f04c80d3d28ca3e8078a4921f4c980
+  sha256: 868c92ea319593bbd690348e6f91c26cdd9c81b87c8a2042ea7d8dd2ad4b0ea2
   requires_dist:
+  - fastcore
   - httpx>=0.28,<1
   - lisette
+  - monsterui>=1.0.19,<2
   - nbformat>=5.10.4,<6
   - python-dotenv>=1.2.2,<2
+  - python-fasthtml>=0.13.3,<0.14
+  - starlette
   - fastcore ; extra == 'app'
   - monsterui>=1.0.19,<2 ; extra == 'app'
   - python-fasthtml>=0.13.3,<0.14 ; extra == 'app'
