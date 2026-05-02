@@ -6,6 +6,7 @@ platforms = ["linux-64"]
 version = "0.1.0"
 
 # nbdev: `nbdev_prepare`. App: `python -m string_therapy.app` (uvicorn only). Run `jupyter lab` separately; icon 4 link: ST_JUPYTER_LAB_URL. Env: nbs/03_therapy_config.ipynb.
+# Quint: canonical source = code cell ``STRING_THERAPY_UI_QNT`` in ``appspecifications.ipynb``; sync → ``pixi run quint-export``. Once: ``pixi run quint-install``. Then: ``quint-typecheck`` / ``quint-run`` / ``quint-verify``.
 
 # Optional dev defaults (override via shell or ST_ENV_FILE → .env):
 [activation.env]
@@ -53,6 +54,49 @@ cmd = [
   "--ServerApp.tornado_settings={\"headers\": {\"Content-Security-Policy\": \"frame-ancestors *\"}}",
 ]
 
+[tasks.quint-install]
+description = "npm install: pins @informalsystems/quint under ./node_modules (run once per clone)."
+cmd = ["npm", "install"]
+
+[tasks.quint-export]
+description = "Emit string_therapy_ui.qnt from STRING_THERAPY_UI_QNT in appspecifications.ipynb."
+cmd = ["python", "scripts/export_quint_spec_from_nb.py"]
+
+[tasks.quint-typecheck]
+description = "Parse + typecheck the UI session Quint spec."
+depends-on = ["quint-export"]
+cmd = ["npx", "quint", "typecheck", "string_therapy/quint_specs/string_therapy_ui.qnt"]
+
+[tasks.quint-run]
+description = "Random simulation with invariant (fast; uses built-in simulator)."
+depends-on = ["quint-export"]
+cmd = [
+  "npx",
+  "quint",
+  "run",
+  "string_therapy/quint_specs/string_therapy_ui.qnt",
+  "--invariant",
+  "activeIconImplementedInv",
+  "--max-samples",
+  "500",
+  "--max-steps",
+  "30",
+]
+
+[tasks.quint-verify]
+description = "Bounded symbolic verification (Apalache; uses Pixi openjdk + npm quint)."
+depends-on = ["quint-export"]
+cmd = [
+  "npx",
+  "quint",
+  "verify",
+  "string_therapy/quint_specs/string_therapy_ui.qnt",
+  "--invariants",
+  "activeIconImplementedInv",
+  "--max-steps",
+  "15",
+]
+
 [dependencies]
 python-fasthtml = ">=0.13.3,<0.14"
 jupyterlab = ">=4.5.6,<5"
@@ -65,6 +109,8 @@ python-dotenv = ">=1.2.2,<2"
 starlette = "*"
 quarto = "*"
 deno = "*"
+nodejs = ">=25.8.2,<25.9"
+openjdk = ">=25.0.2,<26"
 
 [pypi-dependencies]
 # PyPI-only; do not `pixi add lisette` (conda has no package with that name).

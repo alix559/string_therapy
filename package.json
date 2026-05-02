@@ -1,0 +1,8 @@
+{
+  "name": "stringtherapy-quint",
+  "private": true,
+  "description": "Quint CLI for Pixi / Jupyter; install with: pixi run quint-install",
+  "devDependencies": {
+    "@informalsystems/quint": "0.32.0"
+  }
+}

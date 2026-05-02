@@ -1,5 +1,8 @@
 # pixi environments
 .pixi
 
+# npm (Quint CLI via package.json + pixi run quint-install)
+node_modules/
+
 # Jupyter
 **/.ipynb_checkpoints/
