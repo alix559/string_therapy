@@ -1,0 +1,203 @@
+[
+  {
+    "objectID": "icon1.html",
+    "href": "icon1.html",
+    "title": "icon1",
+    "section": "",
+    "text": "This Python code implements a dynamic, Jupyter-like notebook interface using FastHTML and HTMX. It parses Markdown into distinct text and code “cells,” styling them with MonsterUI. Users can toggle between a live-updating editor and a rendered view, enabling seamless, interactive document creation without full page reloads.\n\nsource\n\n\n\ndef icon_panel(\n    md:str, editor_open:bool\n):\n\nRoot fragment; id=icon-panel is the HTMX swap target.\n\nsource\n\n\n\n\ndef notebook_editor_panel(\n    md:str\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef parse_to_notebook(\n    md_text\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef NotebookCell(\n    content, cell_type:str='markdown'\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef default_icon1_viz_layer(\n    \n)-&gt;Icon1VizLayer:\n\nCall self as a function.\n\nsource\n\n\n\n\ndef Icon1VizLayer(\n    notebook_initial_md:str, icon_panel:Callable, parse_to_notebook:Callable\n)-&gt;None:\n\nInjectable notebook UI (same role as visualizations.icon1.viz in string therapy1).",
+    "crumbs": [
+      "icon1"
+    ]
+  },
+  {
+    "objectID": "icon1.html#visualization-layer",
+    "href": "icon1.html#visualization-layer",
+    "title": "icon1",
+    "section": "",
+    "text": "This Python code implements a dynamic, Jupyter-like notebook interface using FastHTML and HTMX. It parses Markdown into distinct text and code “cells,” styling them with MonsterUI. Users can toggle between a live-updating editor and a rendered view, enabling seamless, interactive document creation without full page reloads.\n\nsource\n\n\n\ndef icon_panel(\n    md:str, editor_open:bool\n):\n\nRoot fragment; id=icon-panel is the HTMX swap target.\n\nsource\n\n\n\n\ndef notebook_editor_panel(\n    md:str\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef parse_to_notebook(\n    md_text\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef NotebookCell(\n    content, cell_type:str='markdown'\n):\n\nCall self as a function.\n\nsource\n\n\n\n\ndef default_icon1_viz_layer(\n    \n)-&gt;Icon1VizLayer:\n\nCall self as a function.\n\nsource\n\n\n\n\ndef Icon1VizLayer(\n    notebook_initial_md:str, icon_panel:Callable, parse_to_notebook:Callable\n)-&gt;None:\n\nInjectable notebook UI (same role as visualizations.icon1.viz in string therapy1).",
+    "crumbs": [
+      "icon1"
+    ]
+  },
+  {
+    "objectID": "icon1.html#controller-layer",
+    "href": "icon1.html#controller-layer",
+    "title": "icon1",
+    "section": "Controller Layer",
+    "text": "Controller Layer\nThis code acts as the controller for the notebook visualization layer. It manages the “source of truth” for the markdown content and handles the state(weather the user is currently editing or viewing) HEre is the breakdown of how it works\n\n1. State management (the session)\nthe code uses a session dictionary to keep the notebook’s data alive. This means the content is per-user and temporary. If they clear their browser cookies or the session expires, the notebook resets. &gt; SESSION_MD_KEY : Stores the actual markdown text the user types\n\nSESSION_EDITOR_KEY: A boolean (True/False) that remembers if the user was in Edit mode or view mode\n\n\n\n2. Helper Logic: _md\ndef _md(session: dict) -&gt; str:\n    return session.get(SESSION_MD_KEY) or NOTEBOOK_INITIAL_MD\nThis is a safety check. It tries to grab the user’s saved markdown. If the session is empty (like when they first land on the page), it falls back to the NOTEBOOK_INITIAL_MD default text### 2. Helper Logic: _md\ndef _md(session: dict) -&gt; str:\n    return session.get(SESSION_MD_KEY) or NOTEBOOK_INITIAL_MD\nThis is a safety check. It tries to grab the user’s saved markdown. If the session is empty (like when they first land on the page), it falls back to the NOTEBOOK_INITIAL_MD default text\n\n\n3. The Routes(the “wiring”)\nGET /icon/panel This handles the toggle button logic. * When you click “Edit,” it hits this route with edit=1. The session updates SESSION_EDITOR_KEY to True * When you click “Done”, it hits this route with edit=0 * it then returns the icon_panel HTML, which decides wheather to show the Textarea (editor) or the parse_to_notebook (rendered cells)\nPOST icon/render This is the Live update engine * Remember the hx_trigger=\"keyup changed delay:300ms from the vizualization layer. Every time you pause typing for 300ms, it sends the text here * it saves that text into the session (session[SESSION_MD_KEY] = content). * It then returns the Notebook view (the rendered cells ) so the UI can update immediately.\n\nsource\n\n\nregister_routes\n\ndef register_routes(\n    app, viz_layer:__main__.Icon1VizLayer | None=None\n):\n\nCall self as a function.\n\nsource\n\n\nviz\n\ndef viz(\n    sid:str, session:dict, viz_layer:__main__.Icon1VizLayer | None=None\n):\n\nCall self as a function.",
+    "crumbs": [
+      "icon1"
+    ]
+  },
+  {
+    "objectID": "icon4.html",
+    "href": "icon4.html",
+    "title": "icon4",
+    "section": "",
+    "text": "The viz slot is a full-size iframe loading the URL from ST_JUPYTER_LAB_URL (see therapy_config.jupyter_lab_link_url()). Jupyter Server must allow embedding (e.g. CSP frame-ancestors including your app origin). append_chat_turn_to_notebook uses the REST API as before.",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#constants",
+    "href": "icon4.html#constants",
+    "title": "icon4",
+    "section": "Constants",
+    "text": "Constants\nICON_ID identifies this slot for routing or logging. SESSION_NOTEBOOK_KEY is where the FastHTML session stores the relative path of the notebook file Lab should open (e.g. my_notes.ipynb or a path under the server root).",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#jupyter-path-helpers",
+    "href": "icon4.html#jupyter-path-helpers",
+    "title": "icon4",
+    "section": "Jupyter path helpers",
+    "text": "Jupyter path helpers\nensure_icon4_sid hands chat (lisette_chat) a stable id per browser session. default_notebook_path picks the file when nothing is stored yet (JUPYTER_NOTEBOOK_PATH or my_notes.ipynb). _contents_api_url is the REST base for reading/writing notebook JSON.\nresolve_notebook_path prefers a safe, non-traversal notebook query string when present, then the session value, then the default. session_notebook_path is “current path” without a request override.\n\nsource\n\nlab_iframe_src\n\ndef lab_iframe_src(\n    cache_bust:str | None=None\n)-&gt;str:\n\nIframe src: exact URL from [jupyter_lab_link_url()](https://alix559.github.io/string_therapy/therapy_config.html#jupyter_lab_link_url) (ST_JUPYTER_LAB_URL in .env).\n\nsource\n\n\nsession_notebook_path\n\ndef session_notebook_path(\n    session:dict\n)-&gt;str:\n\nActive notebook path from session (and defaults), ignoring a request override.\n\nsource\n\n\nresolve_notebook_path\n\ndef resolve_notebook_path(\n    notebook:str | None, session:dict\n)-&gt;str:\n\nPick notebook path: non-empty notebook param if safe, else session, else [default_notebook_path()](https://alix559.github.io/string_therapy/icon4.html#default_notebook_path).\n\nsource\n\n\ndefault_notebook_path\n\ndef default_notebook_path(\n    \n)-&gt;str:\n\nNotebook file path when none is stored: JUPYTER_NOTEBOOK_PATH or my_notes.ipynb.\n\nsource\n\n\nensure_icon4_sid\n\ndef ensure_icon4_sid(\n    session:dict\n)-&gt;str:\n\nReturn a stable per-session id for icon4; create and store it if missing.",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#jupyter-lab-iframe-htmx-out-of-band",
+    "href": "icon4.html#jupyter-lab-iframe-htmx-out-of-band",
+    "title": "icon4",
+    "section": "Jupyter Lab iframe (HTMX out-of-band)",
+    "text": "Jupyter Lab iframe (HTMX out-of-band)\nlab_iframe_src() is exactly ST_JUPYTER_LAB_URL. jupyter_wrap_oob replaces #jupyter-wrap (hx_swap_oob).\n\nsource\n\njupyter_wrap_oob\n\ndef jupyter_wrap_oob(\n    session:dict, cache_bust:str | None=None\n)-&gt;Div:\n\nOOB fragment: replaces #jupyter-wrap with the Lab iframe.",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#visualization-and-chat",
+    "href": "icon4.html#visualization-and-chat",
+    "title": "icon4",
+    "section": "Visualization and chat",
+    "text": "Visualization and chat\nviz is only the Lab iframe. chat / get_oob_html unchanged.\n\nsource\n\nget_oob_html\n\ndef get_oob_html(\n    session:dict, sid:str\n):\n\nReturn an empty trigger plus serialized [viz](https://alix559.github.io/string_therapy/icon1.html#viz) XML for out-of-band shell refresh.\n\nsource\n\n\nchat\n\ndef chat(\n    sid:str, msg:str, max_tokens:int=2000\n):\n\nRun Lisette chat for this visualization; notebook writes are handled in app.py.\n\nsource\n\n\nviz\n\ndef viz(\n    sid:str, session:dict\n):\n\nIcon 4: Jupyter Lab iframe (ST_JUPYTER_LAB_URL).",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#appending-chat-turns-to-the-notebook-jupyter-server-api",
+    "href": "icon4.html#appending-chat-turns-to-the-notebook-jupyter-server-api",
+    "title": "icon4",
+    "section": "Appending chat turns to the notebook (Jupyter Server API)",
+    "text": "Appending chat turns to the notebook (Jupyter Server API)\nappend_chat_turn_to_notebook is async: it GETs the notebook document from _contents_api_url, parses it with nbformat, appends cells, then PUTs the updated JSON. Callers (e.g. app.py) use this after chat returns; refresh the notebook in Jupyter Lab to see new cells.\n\nsource\n\nappend_chat_turn_to_notebook\n\nasync def append_chat_turn_to_notebook(\n    notebook_path:str, user_message:str, reply_cell_type:str, assistant_text:str | None\n)-&gt;tuple[bool, str]:\n\nAppend user prompt as markdown, then assistant reply as markdown or code (one GET + one PUT).",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "icon4.html#routes",
+    "href": "icon4.html#routes",
+    "title": "icon4",
+    "section": "Routes",
+    "text": "Routes\nregister_routes attaches GET /icon4/jupyter-frame (iframe fragment + session notebook path).\n\nsource\n\nregister_routes\n\ndef register_routes(\n    app\n):\n\nAttach icon4 routes: HTMX partial for the Lab iframe + notebook path.",
+    "crumbs": [
+      "icon4"
+    ]
+  },
+  {
+    "objectID": "therapy_config.html",
+    "href": "therapy_config.html",
+    "title": "Runtime configuration for string therapy (local dev, pixi , packaged install)",
+    "section": "",
+    "text": "Host / storage * ST_PROJECT_ROOT Default directory for relative paths (default: cwd). * ST_ENV_FILE Path to .env. If unset, tries project .env then cwd. * ST_DATA_DIR App data dir; SQLite defaults to &lt;dir&gt;/app.sqlite. * ST_SQLITE_PATH Full path to SQLite (overrides data dir).\nDock * ST_ICON_IDS Comma-separated, e.g. 1,2,3,4. Default: 1,2,3,4.\nJupyter (REST /api/contents for chat → notebook; run jupyter lab yourself in a terminal) * JUPYTER_BASE_URL, JUPYTER_HOST, JUPYTER_PORT, JUPYTER_TOKEN, JUPYTER_NOTEBOOK_PATH * ST_JUPYTER_LAB_URL Full URL for the Lab iframe (default http://127.0.0.1:8888/lab). Must be reachable from the web browser (not only the server): if you open the app via SSH / remote host, use that host’s IP/DNS + port or an SSH tunnel — localhost in the iframe means the browser machine.\nFastHTML * ST_PORT UI port (default 5007). * ST_BIND_HOST Uvicorn bind address (default 0.0.0.0). If http://localhost:ST_PORT shows ERR_EMPTY_RESPONSE, open http://127.0.0.1:ST_PORT/ instead, or set ST_BIND_HOST=:: (IPv6). * ST_RELOAD Uvicorn reload (dev). * ST_OPEN_BROWSER Open browser on start.\nLLM: LISETTE_*, ANTHROPIC_API_KEY, CLAUDE_API_KEY.\n\nsource\n\njupyter_lab_link_url\n\ndef jupyter_lab_link_url(\n    \n)-&gt;str:\n\nURL for the “Open Jupyter Lab” link in the visualization panel.\nSet ST_JUPYTER_LAB_URL to the URL Jupyter prints when you run jupyter lab. If unset, returns a placeholder (http://127.0.0.1:8888/lab).\n\nsource\n\n\njupyter_base_url\n\ndef jupyter_base_url(\n    \n)-&gt;str:\n\nHTTP origin for Jupyter Server (Lab iframe + REST /api/contents).\nJUPYTER_BASE_URL wins when set (no trailing slash). Otherwise http://{JUPYTER_HOST}:{JUPYTER_PORT}.\nIf Jupyter binds to a different port (e.g. it prints http://127.0.0.1:52537 when 8888 is taken), set JUPYTER_BASE_URL to that full origin so the iframe and REST calls match. Default host is 127.0.0.1 to align with opening the app at http://127.0.0.1:ST_PORT.\n\nsource\n\n\nopen_browser\n\ndef open_browser(\n    \n)-&gt;bool:\n\nOpen UI in browser unless disabled.\n\nsource\n\n\nuvicorn_reload\n\ndef uvicorn_reload(\n    \n)-&gt;bool:\n\nTrue when ST_RELOAD is truthy.\n\nsource\n\n\nweb_app_url\n\ndef web_app_url(\n    \n)-&gt;str:\n\nRecommended browser URL (IPv4 loopback). Use this if http://localhost:… fails.\n\nsource\n\n\nhttp_bind_host\n\ndef http_bind_host(\n    \n)-&gt;str:\n\nAddress uvicorn binds to (ST_BIND_HOST, default 0.0.0.0).\n0.0.0.0 listens on all IPv4 interfaces. Many browsers resolve localhost to IPv6 (::1) first; that does not hit an IPv4-only listener, which often shows as ERR_EMPTY_RESPONSE. Prefer [web_app_url()](https://alix559.github.io/string_therapy/therapy_config.html#web_app_url) in the browser, or set ST_BIND_HOST=:: so localhost works (Linux; 127.0.0.1 may then need the same stack).\n\nsource\n\n\nhttp_port\n\ndef http_port(\n    \n)-&gt;int:\n\nFastHTML / uvicorn port.\n\nsource\n\n\ndock_icon_ids\n\ndef dock_icon_ids(\n    default:tuple[int, ...]=(1, 2, 3, 4)\n)-&gt;tuple[int, ...]:\n\nDock button ids from ST_ICON_IDS, else default.\n\nsource\n\n\nsqlite_path\n\ndef sqlite_path(\n    \n)-&gt;Path:\n\nResolved path to the vault SQLite database.\nWhen installed as a library, set ST_DATA_DIR or ST_SQLITE_PATH so the DB is not under site-packages.\n\nsource\n\n\nload_environment\n\ndef load_environment(\n    \n)-&gt;None:\n\nLoad .env without overriding existing os.environ.\n\nsource\n\n\nproject_root\n\ndef project_root(\n    \n)-&gt;Path:\n\nAnchor for pixi.toml / .env search; defaults to process cwd.",
+    "crumbs": [
+      "Runtime configuration for string therapy (local dev, pixi , packaged install)"
+    ]
+  },
+  {
+    "objectID": "app.html",
+    "href": "app.html",
+    "title": "App",
+    "section": "",
+    "text": "Load .env via therapy_config before importing icons that read env vars. Icon 1 is the markdown notebook UI; icon 4 embeds Jupyter Lab and exposes helpers used by the chat handler.",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "app.html#imports-and-environment",
+    "href": "app.html#imports-and-environment",
+    "title": "App",
+    "section": "",
+    "text": "Load .env via therapy_config before importing icons that read env vars. Icon 1 is the markdown notebook UI; icon 4 embeds Jupyter Lab and exposes helpers used by the chat handler.",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "app.html#app-factory-registry-dock",
+    "href": "app.html#app-factory-registry-dock",
+    "title": "App",
+    "section": "App factory, registry, dock",
+    "text": "App factory, registry, dock\nfast_app supplies rt for route decorators. We register each icon’s HTTP partials, then map slot numbers to callables ([viz](https://alix559.github.io/string_therapy/icon1.html#viz)), not dataclasses. [_dock_icon_ids](https://alix559.github.io/string_therapy/app.html#_dock_icon_ids) filters ST_ICON_IDS / defaults so only implemented slots get buttons—currently 1 and 4.\n\nsource\n\nrender_icon\n\ndef render_icon(\n    icon_id:int, session:dict\n):\n\nCall self as a function.\n\nsource\n\n\nhealth\n\ndef health(\n    \n):\n\nCall self as a function.\n\nsource\n\n\nfavicon\n\ndef favicon(\n    \n):\n\nCall self as a function.",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "app.html#chat-and-lab-shell-helpers",
+    "href": "app.html#chat-and-lab-shell-helpers",
+    "title": "App",
+    "section": "Chat and Lab shell helpers",
+    "text": "Chat and Lab shell helpers\n[chat_icon4](https://alix559.github.io/string_therapy/app.html#chat_icon4) runs Lisette and builds an optional OOB fragment for #icon4-viz. The expanded area mounts both icon panels (Lab iframe uses hx-preserve); GET /expand/{id} swaps #expanded-space to show one panel and hide the other. [_expanded_space_icon4_oob](https://alix559.github.io/string_therapy/app.html#_expanded_space_icon4_oob) restores the Lab view after notebook writes when needed. ## Chat and Lab shell helpers\n[chat_icon4](https://alix559.github.io/string_therapy/app.html#chat_icon4) runs Lisette and builds an optional OOB fragment for #icon4-viz. The expanded area mounts both icon panels (Lab iframe uses hx-preserve); GET /expand/{id} swaps #expanded-space to show one panel and hide the other. [_expanded_space_icon4_oob](https://alix559.github.io/string_therapy/app.html#_expanded_space_icon4_oob) restores the Lab view after notebook writes when needed.\n\nsource\n\nchat_icon4\n\ndef chat_icon4(\n    session:dict, msg:str, max_tokens:int\n):\n\nLab LLM + OOB fragment for #icon4-viz (same pattern as string therapy1).",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "app.html#routes",
+    "href": "app.html#routes",
+    "title": "App",
+    "section": "Routes",
+    "text": "Routes\nGET / shows the main layout with Lab visible by default. GET /expand/{id} re-renders #expanded-space with the correct panel visible (both stay mounted; Jupyter iframe is preserved). POST /chat forwards to Lisette, appends cells via Jupyter Server when possible, and returns status (plus OOB updates mirroring string therapy1).## Routes\nGET / shows the main layout with Lab visible by default. GET /expand/{id} re-renders #expanded-space with the correct panel visible (both stay mounted; Jupyter iframe is preserved). POST /chat forwards to Lisette, appends cells via Jupyter Server when possible, and returns status (plus OOB updates mirroring string therapy1).\n\nsource\n\npost_chat\n\nasync def post_chat(\n    msg:str, session, active_icon:str=None, vault_context:str='', notebook:str | None=None,\n    jupyter_cell_type:str='markdown'\n):\n\nCall self as a function.\n\nsource\n\n\nget_expand\n\ndef get_expand(\n    id:int, session\n):\n\nCall self as a function.\n\nsource\n\n\nhome\n\ndef home(\n    session\n):\n\nCall self as a function.",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "app.html#mainhttpsalix559.github.iostring_therapyapp.htmlmain",
+    "href": "app.html#mainhttpsalix559.github.iostring_therapyapp.htmlmain",
+    "title": "App",
+    "section": "[main()](https://alix559.github.io/string_therapy/app.html#main)",
+    "text": "[main()](https://alix559.github.io/string_therapy/app.html#main)\nStarts uvicorn on ST_BIND_HOST:ST_PORT (defaults 0.0.0.0:5007). Run jupyter lab yourself; icon 4 shows a link (ST_JUPYTER_LAB_URL / placeholder). Use http://127.0.0.1:ST_PORT/ or your host IP when not browsing on the same machine.## [main()](https://alix559.github.io/string_therapy/app.html#main)\nStarts uvicorn on ST_BIND_HOST:ST_PORT (defaults 0.0.0.0:5007). Run jupyter lab yourself; icon 4 shows a link (ST_JUPYTER_LAB_URL / placeholder). Use http://127.0.0.1:ST_PORT/ or your host IP when not browsing on the same machine.\n\nsource\n\nmain\n\ndef main(\n    \n)-&gt;None:\n\nStart the web server. Run: python -m string_therapy.app.",
+    "crumbs": [
+      "App"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "string_therapy",
+    "section": "",
+    "text": "This file will become your README and also the index of your documentation."
+  },
+  {
+    "objectID": "index.html#developer-guide",
+    "href": "index.html#developer-guide",
+    "title": "string_therapy",
+    "section": "Developer Guide",
+    "text": "Developer Guide\nIf you are new to using nbdev here are some useful pointers to get you started.\n\nInstall string_therapy in Development mode\n# make sure string_therapy package is installed in development mode\n$ pip install -e .\n\n# make changes under nbs/ directory\n# ...\n\n# compile to have changes apply to string_therapy\n$ nbdev_prepare"
+  },
+  {
+    "objectID": "index.html#usage",
+    "href": "index.html#usage",
+    "title": "string_therapy",
+    "section": "Usage",
+    "text": "Usage\n\nInstallation\nInstall latest from the GitHub repository:\n$ pip install git+https://github.com/alix559/string_therapy.git\nor from conda\n$ conda install -c alix559 string_therapy\nor from pypi\n$ pip install string_therapy\n\n\nDocumentation\nDocumentation can be found hosted on this GitHub repository’s pages. Additionally you can find package manager specific guidelines on conda and pypi respectively."
+  },
+  {
+    "objectID": "lisette.html",
+    "href": "lisette.html",
+    "title": "Stateful Lisette chat (lisette_client)",
+    "section": "",
+    "text": "_chats is a module level cache ( a single dict shared by every import of this module ) . * keys: (sid, variant) – a 2-tuple of strings: session id and chat * values: Lisette Chat objects (typed as object here because the type checker may not know the exact Chat class without importing lisette.core at module load time\nThis ensures one chat instance per (session, variant) for the lifetime of the process, so repeated calls reuse the same object and conversation state(history) is preserved instead of creating a new chat every time . It starts as {} and is filled when _get_chat creates a new [chat](https://alix559.github.io/string_therapy/icon4.html#chat) for a key that isn’t present yet\n\nsource\n\nlisette_chat\n\ndef lisette_chat(\n    sid:str, msg:str, max_tokens:int, variant:str='default', tools:Optional[List[Any]]=None, sp:str='',\n    max_steps:int=2\n)-&gt;str:\n\nCall self as a function.",
+    "crumbs": [
+      "Stateful Lisette chat (`lisette_client`)"
+    ]
+  }
+]
